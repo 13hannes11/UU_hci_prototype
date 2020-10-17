@@ -10,7 +10,7 @@
 <body>
   <!-- Buttons to add to scheduled elements -->
 
-  <div class="cd-schedule cd-schedule--loading margin-top-lg margin-bottom-lg js-cd-schedule">
+  <div id="schedule_div"class="cd-schedule cd-schedule--loading margin-top-lg margin-bottom-lg js-cd-schedule">
     <div class="cd-schedule__timeline">
       <ul>
         <li><span>09:00</span></li>
@@ -256,6 +256,13 @@
   <script src="assets/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
   <script src="assets/js/main.js"></script>
   <script>
+    reset = function() {
+        div = document.getElementById("schedule_div");
+        div.classList.remove("js-schedule-loaded");
+        div.classList.add("cd-schedule--loading");
+        init();
+    }
+
     appointment_dict = {}
 
     current_id = 0
@@ -342,7 +349,7 @@
 
       rebulid_html = function() {
         document.getElementById("calendar_wrapper").innerHTML = this.as_html()
-        //reset_schedule();
+        reset();
       }
     }
     var schedule = new Schedule([
