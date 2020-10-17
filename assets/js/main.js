@@ -86,6 +86,7 @@
 			// open modal when user selects an event
 			this.singleEvents[i].addEventListener('click', function(event){
 				event.preventDefault();
+				handleEvent(event, event.currentTarget.id);
 				//if(!self.animating) self.openModal(this.getElementsByTagName('a')[0]);
 			});
 		}
@@ -332,12 +333,12 @@
 		var timeStamp = parseInt(timeArray[0])*60 + parseInt(timeArray[1]);
 		return timeStamp;
 	};
-
+	var scheduleTemplate = document.getElementsByClassName('js-cd-schedule'),	
+	scheduleTemplateArray = [],
+	resizing = false;
+	
 	function init() {
 
-		var scheduleTemplate = document.getElementsByClassName('js-cd-schedule'),	
-			scheduleTemplateArray = [],
-			resizing = false;
 		if( scheduleTemplate.length > 0 ) { // init ScheduleTemplate objects
 			for( var i = 0; i < scheduleTemplate.length; i++) {
 				(function(i){
@@ -370,7 +371,5 @@
 			};
 		}
 	}
-
-	init();
 
 	// after changes call .scheduleReset();

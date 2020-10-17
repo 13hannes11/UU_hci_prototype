@@ -253,27 +253,55 @@
   
     <div class="cd-schedule__cover-layer"></div>
   </div> <!-- .cd-schedule -->
+  <script src="assets/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
+  <script src="assets/js/main.js"></script>
   <script>
+    appointment_dict = {}
+
+    current_id = 0
+    generate_id = function() {
+      return current_id++;
+    }
+
     class Appointment {
       constructor(name, start, end, type = 4) { // 1: blue, 2: dark blue, 3: green, 4: yellow
+        this.id = "appointment_" + generate_id();
         this.name = name;
         this.start = start;
         this.end = end;
         this.type = type; //needs to be in [1, 4]
+        this.parent = null;
+
+        appointment_dict[this.id] = this;
+      }
+
+      clicked = function(){
+        alert("I was clicked");
+        this.parent.remove_child(this.id)
+        this.parent.rebulid_html();        
+      }
+
+      set_parent = function(parent) {
+        this.parent = parent;
       }
 
       as_html = function() {
-        return `<li class="cd-schedule__event">
+        var result = `<li id="${ this.id }" class="cd-schedule__event">
                   <a data-start="${ this.start }" data-end="${ this.end }"  data-content="event-yoga-1" data-event="event-${this.type}" href="#0">
                     <em class="cd-schedule__name">${this.name}</em>
                   </a>
-                </li>`
+                </li>`;
+        return result;
       }
     }
+
     class Day {
       constructor(name, appointment_list) {
         this.name = name
         this.appointment_list = appointment_list;
+        this.appointment_list.forEach(appointment => {
+          appointment.set_parent(this);
+        });
       }
       as_html = function() {
         var result = `<li class="cd-schedule__group"><div class="cd-schedule__top-info"><span> ${ this.name }</span></div><ul>`;
@@ -283,11 +311,25 @@
         result += '</ul></li>';
         return result
       }
+      set_parent = function(parent) {
+        this.parent = parent
+      }
+
+      rebulid_html = function(){
+        this.parent.rebulid_html();
+      }
+
+      remove_child = function(id){
+        this.appointment_list = this.appointment_list.filter(child => child.id != id);
+      }
     }
 
     class Schedule {
       constructor(day_list){
         this.day_list = day_list
+        this.day_list.forEach(day => {
+          day.set_parent(this);
+        });
       }
       as_html = function() {
         var result = '<ul>';
@@ -297,8 +339,13 @@
         result += '</ul>';
         return result;
       }
+
+      rebulid_html = function() {
+        document.getElementById("calendar_wrapper").innerHTML = this.as_html()
+        //reset_schedule();
+      }
     }
-    document.getElementById("calendar_wrapper").innerHTML += new Schedule([
+    var schedule = new Schedule([
       new Day("Monday", [
         new Appointment("Lecture HCI", "9:30", "11:00", 4),
         new Appointment("Lecture Analysis", "12:00", "13:30", 4),
@@ -321,14 +368,19 @@
         new Appointment("Gask", "16:00", "18:30", 4)
       ]),
       new Day("Saturday", [
-
       ]),
       new Day("Sunday", [
 
       ])
-    ]).as_html();
+    ]);
+
+    handleEvent = function(event, id) {
+      appointment_dict[id].clicked();
+    }
+
+    schedule.rebulid_html();
+    init();
   </script>
- <script src="assets/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
-  <script src="assets/js/main.js"></script>
+ 
 </body>
 </html>
