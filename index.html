@@ -301,6 +301,12 @@
         return result;
       }
     }
+    class EmptySpaceAppointment extends Appointment {
+      constructor(start, end, type = 0) {
+        super("Free", start, end, type);
+      }
+    }
+
 
     class Day {
       constructor(name, appointment_list) {
@@ -354,6 +360,7 @@
     }
     var schedule = new Schedule([
       new Day("Monday", [
+        new EmptySpaceAppointment("9:00", "9:30"),
         new Appointment("Lecture HCI", "9:30", "11:00", 4),
         new Appointment("Lecture Analysis", "12:00", "13:30", 4),
         new Appointment("Innebandy", "17:00", "18:30", 4),
