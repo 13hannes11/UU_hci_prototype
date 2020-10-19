@@ -9,6 +9,9 @@
 </head>
 <body>
   <!-- Buttons to add to scheduled elements -->
+  <div id="task_schdeuler_dialogue" style="width: 200px; height: 200px; position: absolute; z-index: 100; background-color: aqua; visibility: hidden;">
+    
+  </div>
 
   <div id="schedule_div"class="cd-schedule cd-schedule--loading margin-top-lg margin-bottom-lg js-cd-schedule">
     <div class="cd-schedule__timeline">
@@ -270,6 +273,17 @@
       return current_id++;
     }
 
+    populate_task_scheduler = function(appointmentId, posX, posY){
+      var appointment = appointment_dict[appointmentId];
+      var domElement = document.getElementById("task_schdeuler_dialogue");
+      domElement.style.left = posX + "px";
+      domElement.style.top = posY + "px";
+      domElement.style.visibility = "visible";
+      var innerHTML = appointment.name;
+      innerHTML += "<br><button onclick='document.getElementById(\"task_schdeuler_dialogue\").style.visibility = \"hidden\"' >Cancel</button><button>Okay</button>";
+      domElement.innerHTML = innerHTML;
+    }
+
     class Appointment {
       constructor(name, start, end, type = 4) { // 1: blue, 2: dark blue, 3: green, 4: yellow
         this.id = "appointment_" + generate_id();
@@ -282,7 +296,7 @@
         appointment_dict[this.id] = this;
       }
 
-      clicked = function(){
+      clicked = function(event){
         alert("I was clicked");
         this.parent.remove_child(this.id)
         this.parent.rebulid_html();        
@@ -304,6 +318,9 @@
     class EmptySpaceAppointment extends Appointment {
       constructor(start, end, type = 0) {
         super("Free", start, end, type);
+      }
+      clicked = function(event){
+        populate_task_scheduler(this.id, event.pageX, event.pageY)  
       }
     }
 
@@ -400,7 +417,7 @@
     ]);
 
     handleEvent = function(event, id) {
-      appointment_dict[id].clicked();
+      appointment_dict[id].clicked(event);
     }
 
     schedule.rebulid_html();
