@@ -9,7 +9,7 @@
 </head>
 <body>
   <!-- Buttons to add to scheduled elements -->
-  <div id="task_schdeuler_dialogue" style="width: 200px; height: 200px; position: absolute; z-index: 100; background-color: aqua; visibility: hidden;">
+  <div id="task_schdeuler_dialogue" style="width: 300px; height: 200px; position: absolute; z-index: 100; background-color: aqua; visibility: hidden;">
     
   </div>
 
@@ -279,8 +279,12 @@
       domElement.style.left = posX + "px";
       domElement.style.top = posY + "px";
       domElement.style.visibility = "visible";
+
       var innerHTML = appointment.name;
-      innerHTML += "<br><button onclick='document.getElementById(\"task_schdeuler_dialogue\").style.visibility = \"hidden\"' >Cancel</button><button>Okay</button>";
+      innerHTML += `<br><label for="start-input">Start Time: </label><input type="time" id="start-input" required>`;
+      innerHTML += `<br><label for="end-input">End Time: </label><input type="time" id="end-input" required>`;
+      innerHTML += "<br><button onclick='document.getElementById(\"task_schdeuler_dialogue\").style.visibility = \"hidden\"' >Cancel</button>"
+      innerHTML += "<button>Okay</button>";
       domElement.innerHTML = innerHTML;
     }
 
