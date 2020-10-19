@@ -9,7 +9,7 @@
 </head>
 <body>
   <!-- Buttons to add to scheduled elements -->
-  <div id="task_schdeuler_dialogue" style="width: 300px; height: 200px; position: absolute; z-index: 100; background-color: white; padding: 30px; visibility: hidden;">
+  <div id="task_schdeuler_dialogue" style="width: 300px; height: 300px; position: absolute; z-index: 100; background-color: white; padding: 30px; visibility: hidden;">
     
   </div>
 
@@ -92,12 +92,22 @@
       domElement.style.top = posY + "px";
       domElement.style.visibility = "visible";
 
-      var innerHTML = appointment.name;
-      innerHTML += `<br><label for="start-input">Start Time: </label><input type="time" id="start-input" required>`;
-      innerHTML += `<br><label for="end-input">End Time: </label><input type="time" id="end-input" required>`;
-      innerHTML += "<br><button onclick='document.getElementById(\"task_schdeuler_dialogue\").style.visibility = \"hidden\"' >Cancel</button>"
-      innerHTML += "<button>Okay</button>";
+      var innerHTML = "";
+      innerHTML +=   '<label for="todo_drop_down">Select a To-Do:</label><select style="width: 100%;" id="todo_drop_down">';
+      task_list.task_list.forEach(task => {
+        innerHTML += `<option value="${task.id}">${task.name}</option>`
+      });
+      innerHTML += "</select>";
+
+      innerHTML += `<br><label for="start-input">Start Time: </label><input style="width: 100%;" type="time" id="start-input" required>`;
+      innerHTML += `<br><label for="end-input">End Time: </label><input style="width: 100%;" type="time" id="end-input" required>`;
+      innerHTML += "<br><br><button class='cancel_button' onclick='document.getElementById(\"task_schdeuler_dialogue\").style.visibility = \"hidden\"' >Cancel</button>"
+      innerHTML += "<button class='ok_button' onclick='process_task_scheduler()'>Okay</button>";
       domElement.innerHTML = innerHTML;
+    }
+    process_task_scheduler = function() {
+      var domElement = document.getElementById("task_schdeuler_dialogue").style.visibility = "hidden";
+      alert("Schedule Task")
     }
 
     class TaskList {

@@ -87,6 +87,20 @@
      display: flex;
      flex-wrap: wrap;
 }
+
+.ok_button {
+    width: 49%;
+    background-color: green;
+    border: none;
+    margin-left: 2%;
+    color: white;
+}
+.cancel_button {
+    width: 49%;
+    background-color: red;
+    border: none;
+    color: white;
+}
  .grid > * {
      flex-basis: 100%;
      max-width: 100%;
