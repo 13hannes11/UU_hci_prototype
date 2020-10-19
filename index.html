@@ -94,7 +94,7 @@
 
       var innerHTML = "";
       innerHTML +=   '<label for="todo_drop_down">Select a To-Do:</label><select style="width: 100%;" id="todo_drop_down">';
-      task_list.task_list.forEach(task => {
+      task_list.task_list.filter(task => task.time_needed_h - task.time_scheduled > 0).forEach(task => {
         innerHTML += `<option value="${task.id}">${task.name}</option>`
       });
       innerHTML += "</select>";
@@ -117,8 +117,9 @@
       end_time_stamp = getScheduleTimestamp(end_time);
 
       var appointment = appointment_dict[appointmentId];
-
-      if(start_time_stamp > end_time_stamp) {
+      if(task == undefined) {
+        var domElement = document.getElementById("task_schdeuler_dialogue").style.visibility = "hidden";
+      } if(start_time_stamp > end_time_stamp) {
         error = true;
         alert("Start time cannot be after end time.");
       } else if(start_time_stamp < getScheduleTimestamp(appointment.start)) {
@@ -129,12 +130,12 @@
         alert("End cannot be after free slot ends.");
       }
 
-      
-
       if (!error) {
         new_appointment = new Appointment(task.name, start_time, end_time, 1);
-        // TODO: add scheduled time to task and if all time scheduled remove task
+        duration = (end_time_stamp - start_time_stamp) / 60
+        task.time_scheduled += duration;
         appointment.split_up(new_appointment);
+        task_list.rebulid_html();
         var domElement = document.getElementById("task_schdeuler_dialogue").style.visibility = "hidden";
       }
     }
@@ -145,7 +146,7 @@
       }
       as_html = function() {
         var result = "<ul>";
-        this.task_list.forEach(task => {
+        this.task_list.filter(task => task.time_needed_h - task.time_scheduled > 0).forEach(task => {
           result += task.as_html();
         });
         result += "</ul>";
