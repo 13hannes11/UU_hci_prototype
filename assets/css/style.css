@@ -7176,8 +7176,8 @@
 }
  @media (min-width: 64rem) {
      .js .cd-schedule {
-         width: calc(100% - 2*var(--component-padding));
-         margin-left: auto;
+         width: calc(100% - 350px);
+         margin-left: 10px;
          margin-right: auto;
          max-width: var(--max-width-xl);
     }

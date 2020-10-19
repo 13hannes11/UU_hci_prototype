@@ -9,7 +9,7 @@
 </head>
 <body>
   <!-- Buttons to add to scheduled elements -->
-  <div id="task_schdeuler_dialogue" style="width: 300px; height: 200px; position: absolute; z-index: 100; background-color: aqua; visibility: hidden;">
+  <div id="task_schdeuler_dialogue" style="width: 300px; height: 200px; position: absolute; z-index: 100; background-color: white; padding: 30px; visibility: hidden;">
     
   </div>
 
@@ -37,7 +37,7 @@
         <li><span>18:00</span></li>
       </ul>
     </div>
-    
+
     <div id="calendar_wrapper" class="cd-schedule__events">
 
     </div>
@@ -62,6 +62,11 @@
   
     <div class="cd-schedule__cover-layer"></div>
   </div> <!-- .cd-schedule -->
+
+  <div id="tasks_wrapper" style="width: 300px;  height: 100%; right: 0px; top: 0px; position: fixed; background: turquoise;">
+
+  </div>
+
   <script src="assets/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
   <script src="assets/js/main.js"></script>
   <script>
@@ -73,6 +78,7 @@
     }
 
     appointment_dict = {}
+    task_dict = {}
 
     current_id = 0
     generate_id = function() {
@@ -92,6 +98,42 @@
       innerHTML += "<br><button onclick='document.getElementById(\"task_schdeuler_dialogue\").style.visibility = \"hidden\"' >Cancel</button>"
       innerHTML += "<button>Okay</button>";
       domElement.innerHTML = innerHTML;
+    }
+
+    class TaskList {
+      constructor(task_list){
+        this.task_list = task_list;
+      }
+      as_html = function() {
+        var result = "<ul>";
+        this.task_list.forEach(task => {
+          result += task.as_html();
+        });
+        result += "</ul>";
+        return result;
+      }
+      rebulid_html = function() {
+        document.getElementById("tasks_wrapper").innerHTML = this.as_html();
+      }
+    }
+
+    class Task {
+      constructor(name, time_needed_h, time_scheduled = 0) {
+        this.id = generate_id();
+        this.name = name;
+        this.time_needed_h = time_needed_h;
+        this.time_scheduled = time_scheduled;
+
+        task_dict[this.id] =  this;
+      }
+
+      as_html = function() {
+        return `<li>${this.name}</li>`;
+      }
+
+      set_parent = function(parent) {
+        this.parent = parent;
+      }
     }
 
     class Appointment {
@@ -226,11 +268,16 @@
       ])
     ]);
 
+    task_list = new TaskList([
+      new Task("Test", 1),
+    ]);
+
     handleEvent = function(event, id) {
       appointment_dict[id].clicked(event);
     }
 
     schedule.rebulid_html();
+    task_list.rebulid_html();
     init();
   </script>
  
