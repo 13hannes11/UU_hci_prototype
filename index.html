@@ -102,12 +102,41 @@
       innerHTML += `<br><label for="start-input">Start Time: </label><input style="width: 100%;" value="${appointment.start}" min="${appointment.start}" max="${appointment.end}"type="time" id="start-input" required>`;
       innerHTML += `<br><label for="end-input">End Time: </label><input style="width: 100%;" value="${appointment.end}" min="${appointment.start}" max="${appointment.end}" type="time" id="end-input" required>`;
       innerHTML += "<br><br><button class='cancel_button' onclick='document.getElementById(\"task_schdeuler_dialogue\").style.visibility = \"hidden\"' >Cancel</button>"
-      innerHTML += "<button class='ok_button' onclick='process_task_scheduler()'>Okay</button>";
+      innerHTML += `<button class='ok_button' onclick='process_task_scheduler("${appointmentId}")'>Okay</button>`;
       domElement.innerHTML = innerHTML;
     }
-    process_task_scheduler = function() {
-      var domElement = document.getElementById("task_schdeuler_dialogue").style.visibility = "hidden";
-      alert("Schedule Task")
+    process_task_scheduler = function(appointmentId) {
+      error = false;
+
+      var start_time = document.getElementById("start-input").value;
+      var end_time = document.getElementById("end-input").value;
+
+      var task = task_dict[document.getElementById("todo_drop_down").value];
+
+      start_time_stamp = getScheduleTimestamp(start_time);
+      end_time_stamp = getScheduleTimestamp(end_time);
+
+      var appointment = appointment_dict[appointmentId];
+
+      if(start_time_stamp > end_time_stamp) {
+        error = true;
+        alert("Start time cannot be after end time.");
+      } else if(start_time_stamp < getScheduleTimestamp(appointment.start)) {
+        error = true;
+        alert("Start cannot be before free slot starts.");
+      } else if(end_time_stamp > getScheduleTimestamp(appointment.end)) {
+        error = true;
+        alert("End cannot be after free slot ends.");
+      }
+
+      
+
+      if (!error) {
+        new_appointment = new Appointment(task.name, start_time, end_time, 1);
+        // TODO: add scheduled time to task and if all time scheduled remove task
+        appointment.split_up(new_appointment);
+        var domElement = document.getElementById("task_schdeuler_dialogue").style.visibility = "hidden";
+      }
     }
 
     class TaskList {
@@ -184,6 +213,12 @@
       clicked = function(event){
         populate_task_scheduler(this.id, event.pageX, event.pageY)  
       }
+      split_up = function(appointment){
+        this.parent.remove_child(this.id);
+        this.parent.add_child(appointment);
+        // TODO: fill empty space
+        this.parent.rebulid_html(); 
+      }
     }
 
 
@@ -209,6 +244,10 @@
 
       rebulid_html = function(){
         this.parent.rebulid_html();
+      }
+
+      add_child = function(appointment) {
+        this.appointment_list.push(appointment);
       }
 
       remove_child = function(id){
