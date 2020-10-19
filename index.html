@@ -215,8 +215,13 @@
       }
       split_up = function(appointment){
         this.parent.remove_child(this.id);
+        if(appointment.start != this.start) {
+          this.parent.add_child(new EmptySpaceAppointment(this.start, appointment.start));
+        }
         this.parent.add_child(appointment);
-        // TODO: fill empty space
+        if(appointment.end != this.end) {
+          this.parent.add_child(new EmptySpaceAppointment(appointment.end, this.end));
+        }
         this.parent.rebulid_html(); 
       }
     }
