@@ -63,7 +63,7 @@
     <div class="cd-schedule__cover-layer"></div>
   </div> <!-- .cd-schedule -->
 
-  <div id="tasks_wrapper" style="width: 300px;  height: 100%; right: 0px; top: 0px; position: fixed; background: turquoise;">
+  <div id="tasks_wrapper" style="width: 300px;  height: 100%; right: 0px; top: 0px; position: fixed; background: #ededed; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
 
   </div>
 
@@ -145,11 +145,11 @@
         this.task_list = task_list;
       }
       as_html = function() {
-        var result = "<ul>";
+        var result = "<div  style='margin-top: 20px'><h2 style='padding-left: 16px;'>To-Dos</h2><ul>";
         this.task_list.filter(task => task.time_needed_h - task.time_scheduled > 0).forEach(task => {
           result += task.as_html();
         });
-        result += "</ul>";
+        result += "</ul></div>";
         return result;
       }
       rebulid_html = function() {
@@ -168,7 +168,7 @@
       }
 
       as_html = function() {
-        return `<li>${this.name}</li>`;
+        return '<li>' + `<div style="margin: 10px; background-color: white; padding: 5px 16px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"><h4><b>${this.name}</b></h4><p>Scheduled ${this.time_scheduled}h of  ${this.time_needed_h}h</p></div>` + '</li>';
       }
 
       set_parent = function(parent) {
