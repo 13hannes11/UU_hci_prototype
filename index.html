@@ -99,8 +99,8 @@
       });
       innerHTML += "</select>";
 
-      innerHTML += `<br><label for="start-input">Start Time: </label><input style="width: 100%;" type="time" id="start-input" required>`;
-      innerHTML += `<br><label for="end-input">End Time: </label><input style="width: 100%;" type="time" id="end-input" required>`;
+      innerHTML += `<br><label for="start-input">Start Time: </label><input style="width: 100%;" value="${appointment.start}" min="${appointment.start}" max="${appointment.end}"type="time" id="start-input" required>`;
+      innerHTML += `<br><label for="end-input">End Time: </label><input style="width: 100%;" value="${appointment.end}" min="${appointment.start}" max="${appointment.end}" type="time" id="end-input" required>`;
       innerHTML += "<br><br><button class='cancel_button' onclick='document.getElementById(\"task_schdeuler_dialogue\").style.visibility = \"hidden\"' >Cancel</button>"
       innerHTML += "<button class='ok_button' onclick='process_task_scheduler()'>Okay</button>";
       domElement.innerHTML = innerHTML;
@@ -239,19 +239,19 @@
     }
     var schedule = new Schedule([
       new Day("Monday", [
-        new EmptySpaceAppointment("9:00", "9:30"),
-        new Appointment("Lecture HCI", "9:30", "11:00", 4),
+        new EmptySpaceAppointment("09:00", "09:30"),
+        new Appointment("Lecture HCI", "09:30", "11:00", 4),
         new EmptySpaceAppointment("11:00", "12:00"),
         new Appointment("Lecture Analysis", "12:00", "13:30", 4),
         new EmptySpaceAppointment("13:30", "17:00"),
         new Appointment("Innebandy", "17:00", "18:30", 4),
       ]),
       new Day("Tuesday", [
-        new EmptySpaceAppointment("9:00", "16:30"),
+        new EmptySpaceAppointment("09:00", "16:30"),
         new Appointment("Group Meeting", "16:30", "18:30", 4),
       ]),
       new Day("Wednesday", [
-        new EmptySpaceAppointment("9:00", "12:00"),
+        new EmptySpaceAppointment("09:00", "12:00"),
         new Appointment("Lecture HCI", "12:00", "13:30", 4),
         new EmptySpaceAppointment("13:30", "15:00"),
         new Appointment("Dentist", "15:00", "16:00", 4),
@@ -259,22 +259,22 @@
         new Appointment("Lecture Swedish", "16:30", "18:30", 4),
       ]),
       new Day("Thursday", [
-        new EmptySpaceAppointment("9:00", "9:30"),
-        new Appointment("Lecture Analysis", "9:30", "11:00", 4),
+        new EmptySpaceAppointment("09:00", "09:30"),
+        new Appointment("Lecture Analysis", "09:30", "11:00", 4),
         new EmptySpaceAppointment("11:00", "14:00"),
         new Appointment("Fika", "14:00", "14:45", 4),
         new EmptySpaceAppointment("14:45", "18:30"),
       ]),
       new Day("Friday", [
-        new Appointment("Seminar: Discrimination", "9:00", "13:00", 4),
+        new Appointment("Seminar: Discrimination", "09:00", "13:00", 4),
         new EmptySpaceAppointment("13:00", "16:00"),
         new Appointment("Gask", "16:00", "18:30", 4)
       ]),
       new Day("Saturday", [
-        new EmptySpaceAppointment("9:00", "18:30"),
+        new EmptySpaceAppointment("09:00", "18:30"),
       ]),
       new Day("Sunday", [
-        new EmptySpaceAppointment("9:00", "18:30"),
+        new EmptySpaceAppointment("09:00", "18:30"),
       ])
     ]);
 
