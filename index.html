@@ -218,6 +218,14 @@
         }
         this.parent.rebulid_html(); 
       }
+      as_html = function() {
+        var result = `<li id="${ this.id }" class="cd-schedule__event">
+                  <a data-start="${ this.start }" data-end="${ this.end }"  data-content="event-yoga-1" data-event="event-${this.type}" href="#0">
+                    <em style="font-size: 16px;" class="cd-schedule__name">Click to schedule Task</em>
+                  </a>
+                </li>`;
+        return result;
+      }
     }
 
 
@@ -277,11 +285,11 @@
     }
     var schedule = new Schedule([
       new Day("Monday", [
-        new EmptySpaceAppointment("09:00", "09:30"),
-        new Appointment("Lecture HCI", "09:30", "11:00", 4),
-        new EmptySpaceAppointment("11:00", "12:00"),
-        new Appointment("Lecture Analysis", "12:00", "13:30", 4),
-        new EmptySpaceAppointment("13:30", "17:00"),
+        new EmptySpaceAppointment("09:00", "10:00"),
+        new Appointment("Lecture HCI", "10:00", "11:30", 4),
+        new EmptySpaceAppointment("11:30", "12:30"),
+        new Appointment("Lecture Analysis", "12:30", "14:00", 4),
+        new EmptySpaceAppointment("14:00", "17:00"),
         new Appointment("Innebandy", "17:00", "18:30", 4),
       ]),
       new Day("Tuesday", [
@@ -293,13 +301,13 @@
         new Appointment("Lecture HCI", "12:00", "13:30", 4),
         new EmptySpaceAppointment("13:30", "15:00"),
         new Appointment("Dentist", "15:00", "16:00", 4),
-        new EmptySpaceAppointment("16:00", "16:30"),
-        new Appointment("Lecture Swedish", "16:30", "18:30", 4),
+        new EmptySpaceAppointment("16:00", "17:00"),
+        new Appointment("Lecture Swedish", "17:00", "18:30", 4),
       ]),
       new Day("Thursday", [
-        new EmptySpaceAppointment("09:00", "09:30"),
-        new Appointment("Lecture Analysis", "09:30", "11:00", 4),
-        new EmptySpaceAppointment("11:00", "14:00"),
+        new EmptySpaceAppointment("09:00", "10:00"),
+        new Appointment("Lecture Analysis", "10:00", "11:30", 4),
+        new EmptySpaceAppointment("11:30", "14:00"),
         new Appointment("Fika", "14:00", "14:45", 4),
         new EmptySpaceAppointment("14:45", "18:30"),
       ]),
