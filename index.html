@@ -187,13 +187,6 @@
 
         appointment_dict[this.id] = this;
       }
-
-      clicked = function(event){
-        alert("I was clicked");
-        this.parent.remove_child(this.id)
-        this.parent.rebulid_html();        
-      }
-
       set_parent = function(parent) {
         this.parent = parent;
       }
