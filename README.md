@@ -1,4 +1,8 @@
-# Schedule Template
+# To-Do Planner Prototype HCI
+
+This is a prototype for my human computer interaction course at uppsala university. 
+
+It is based on:
 
 A simple template that lets you display events on a timeline, as well as organize them in groups (week days, conference rooms etc…).
 
